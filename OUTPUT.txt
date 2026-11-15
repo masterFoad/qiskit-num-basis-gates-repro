@@ -1,0 +1,64 @@
+Qiskit 2.7.0.dev0, macOS arm64, Python 3.13.14
+
+$ python reproduce.py
+swap(0, 1); h(0)
+  num_basis_gates:      0
+  CX in the synthesis:  3
+  weyl_coordinates:     [0. 0. 0.]
+  Weyl decomposition:   [0.785398 0.785398 0.785398]
+h(1); cx(0, 1); sx(0); sdg(1)
+  num_basis_gates:      2
+  CX in the synthesis:  1
+  weyl_coordinates:     [0.392699 0.392699 0.      ]
+  Weyl decomposition:   [0.785398 0.       0.      ]
+swap(0, 1); h(0), rounded to 15 significant digits
+  num_basis_gates:      3
+  CX in the synthesis:  3
+  weyl_coordinates:     [ 0.785398  0.785398 -0.785398]
+  Weyl decomposition:   [0.785398 0.785398 0.785398]
+swap(0, 1)
+  num_basis_gates:      3
+  CX in the synthesis:  3
+  weyl_coordinates:     [0.785398 0.785398 0.785398]
+  Weyl decomposition:   [0.785398 0.785398 0.785398]
+
+$ python consolidate_blocks.py
+CX after ConsolidateBlocks:        2
+CX with force_consolidate=True:    1
+SWAP block:       {'cx': 3}
+SWAP block + h:   {'unitary': 1}
+
+$ python sweep.py
+gate   circuits  wrong  wrong values (count: times)
+swap       6561    373  0 instead of 3: 362, 2 instead of 3: 11
+iswap      6561      4  0 instead of 2: 4
+dcx        6561     66  0 instead of 2: 66
+cx         6561     32  0 instead of 1: 12, 2 instead of 1: 20
+cz         6561     35  0 instead of 1: 24, 2 instead of 1: 11
+ecr        6561     48  0 instead of 1: 24, 2 instead of 1: 24
+
+$ cd faer-reproducer && cargo run --release
+[Complex { re: 0.0, im: 0.0 }, Complex { re: 0.0, im: 0.0 }, Complex { re: 0.0, im: 0.0 }, Complex { re: 0.0, im: 0.0 }]
+
+$ cd weyl-probe && cargo run --release
+swap(0, 1): determinant = (-1e0, -0e0)
+  M^T M row 0: (1.997e-16, 1.000e0) (0.000e0, 0.000e0) (0.000e0, 0.000e0) (0.000e0, 0.000e0)
+  M^T M row 1: (0.000e0, 0.000e0) (1.997e-16, 1.000e0) (0.000e0, 0.000e0) (0.000e0, 0.000e0)
+  M^T M row 2: (0.000e0, 0.000e0) (0.000e0, 0.000e0) (1.997e-16, 1.000e0) (0.000e0, 0.000e0)
+  M^T M row 3: (0.000e0, 0.000e0) (0.000e0, 0.000e0) (0.000e0, 0.000e0) (1.997e-16, 1.000e0)
+  faer eigenvalues: (0.000000, 1.000000) (0.000000, 1.000000) (0.000000, 1.000000) (0.000000, 1.000000)
+  moduli: [1.0, 1.0, 1.0, 1.0]
+swap(0, 1); h(0): determinant = (-9.999999999999997e-1, 0e0)
+  M^T M row 0: (-2.220e-16, 1.000e0) (0.000e0, 0.000e0) (0.000e0, 0.000e0) (-1.233e-32, 0.000e0)
+  M^T M row 1: (0.000e0, 0.000e0) (-2.220e-16, 1.000e0) (1.233e-32, 0.000e0) (0.000e0, 0.000e0)
+  M^T M row 2: (0.000e0, 0.000e0) (1.233e-32, 0.000e0) (-2.220e-16, 1.000e0) (0.000e0, 0.000e0)
+  M^T M row 3: (-1.233e-32, 0.000e0) (0.000e0, 0.000e0) (0.000e0, 0.000e0) (-2.220e-16, 1.000e0)
+  faer eigenvalues: (0.000000, 0.000000) (0.000000, 0.000000) (0.000000, 0.000000) (0.000000, 0.000000)
+  moduli: [0.0, 0.0, 0.0, 0.0]
+h(1); cx(0, 1); sx(0); sdg(1): determinant = (-9.999999999999997e-1, 0e0)
+  M^T M row 0: (1.110e-16, -1.000e0) (3.081e-33, 0.000e0) (0.000e0, 0.000e0) (0.000e0, 0.000e0)
+  M^T M row 1: (3.081e-33, 0.000e0) (1.110e-16, -1.000e0) (0.000e0, 0.000e0) (0.000e0, 0.000e0)
+  M^T M row 2: (0.000e0, 0.000e0) (0.000e0, 0.000e0) (-1.110e-16, 1.000e0) (0.000e0, 0.000e0)
+  M^T M row 3: (0.000e0, 0.000e0) (0.000e0, 0.000e0) (0.000e0, 0.000e0) (-1.110e-16, 1.000e0)
+  faer eigenvalues: (0.000000, 0.000000) (0.000000, 0.000000) (-0.000000, 1.000000) (-0.000000, 1.000000)
+  moduli: [0.0, 0.0, 0.9999999999999999, 0.9999999999999999]
