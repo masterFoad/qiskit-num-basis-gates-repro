@@ -72,3 +72,9 @@ Line numbers on main:
 ## License
 
 Apache License 2.0, see `LICENSE`.
+
+## Credit
+
+Created by Foad Abo Dahood (@masterFoad). If you copy, reuse or build on these reproducers or
+tests, cite this repository (https://github.com/masterFoad/qiskit-num-basis-gates-repro) and credit
+Foad Abo Dahood (@masterFoad). Under the Apache-2.0 license, keep the NOTICE file with any copy.
